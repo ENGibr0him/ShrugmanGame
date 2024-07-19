@@ -5,12 +5,10 @@ import figlet from "figlet";
 import ShrugmanGame from "./game.js";
 import categories from "./categories.js";
 
-// Simple function to clear the console
+// Function to clear the console
 const clearConsole = () => {
   console.log("\x1Bc");
 };
-
-const gameHistory = [];
 
 const displayTitle = () => {
   console.log(
@@ -18,10 +16,19 @@ const displayTitle = () => {
   );
 };
 
+const displayDescription = () => {
+  console.log(
+    chalk.magenta(`
+Welcome to the Shrugman Game! Shrugman is a fun and interactive command-line game where players attempt to guess a hidden phrase one letter at a time. Inspired by the classic game of Hangman, Shrugman offers a modern twist with colorful outputs and an enhanced user interface.
+    `)
+  );
+};
+
 const startGamePrompt = async () => {
   clearConsole();
   displayTitle();
-  const answers = await inquirer.prompt([
+  displayDescription();
+  const { start } = await inquirer.prompt([
     {
       type: "confirm",
       name: "start",
@@ -29,12 +36,12 @@ const startGamePrompt = async () => {
       default: true,
     },
   ]);
-  return answers.start;
+  return start;
 };
 
 const selectCategory = async () => {
   const categoryNames = Object.keys(categories);
-  const answers = await inquirer.prompt([
+  const { category } = await inquirer.prompt([
     {
       type: "list",
       name: "category",
@@ -42,7 +49,7 @@ const selectCategory = async () => {
       choices: [...categoryNames, "Exit"],
     },
   ]);
-  return answers.category;
+  return category;
 };
 
 const playGame = async (category) => {
@@ -55,7 +62,7 @@ const playGame = async (category) => {
     displayTitle();
     console.log(chalk.yellow(game.getCurrentState()));
 
-    const answers = await inquirer.prompt([
+    const { guess } = await inquirer.prompt([
       {
         type: "input",
         name: "guess",
@@ -63,7 +70,6 @@ const playGame = async (category) => {
           'Guess a letter, type "Back" to return to category selection, or "Exit" to quit:',
       },
     ]);
-    const guess = answers.guess;
 
     if (guess.toLowerCase() === "back") {
       return "back";
@@ -103,7 +109,7 @@ const playGame = async (category) => {
     );
   }
 
-  gameHistory.push(`${secretPhrase} - ${game.didWin() ? "win" : "loss"}`);
+  return game.didWin() ? "win" : "loss";
 };
 
 const main = async () => {
@@ -131,18 +137,17 @@ const main = async () => {
       }
     }
 
-    const answers = await inquirer.prompt([
+    const { playAgain: playAgainResponse } = await inquirer.prompt([
       {
         type: "confirm",
         name: "playAgain",
         message: "Do you want to play another round?",
       },
     ]);
-    playAgain = answers.playAgain;
+    playAgain = playAgainResponse;
   }
 
   console.log("Game history:");
-  gameHistory.forEach((record) => console.log(record));
 };
 
 main();
