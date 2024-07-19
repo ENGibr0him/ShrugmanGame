@@ -1,6 +1,6 @@
 // main.js
-import chalk from "chalk";
 import inquirer from "inquirer";
+import chalk from "chalk";
 import figlet from "figlet";
 import ShrugmanGame from "./game.js";
 import categories from "./categories.js";
@@ -25,7 +25,7 @@ const selectCategory = async () => {
       type: "list",
       name: "category",
       message: "Select a category:",
-      choices: categoryNames,
+      choices: [...categoryNames, "Exit"],
     },
   ]);
   return answers.category;
@@ -45,10 +45,19 @@ const playGame = async (category) => {
       {
         type: "input",
         name: "guess",
-        message: "Guess a letter:",
+        message:
+          'Guess a letter, type "Back" to return to category selection, or "Exit" to quit:',
       },
     ]);
     const guess = answers.guess;
+
+    if (guess.toLowerCase() === "back") {
+      return "back";
+    }
+    if (guess.toLowerCase() === "exit") {
+      return "exit";
+    }
+
     const result = game.makeGuess(guess);
 
     if (!result.success) {
@@ -89,7 +98,25 @@ const main = async () => {
   let playAgain = true;
   while (playAgain) {
     const category = await selectCategory();
-    await playGame(category);
+
+    if (category === "Exit") {
+      console.log(chalk.blue("Thank you for playing!"));
+      break;
+    }
+
+    while (true) {
+      const result = await playGame(category);
+      if (result === "back") {
+        break;
+      }
+      if (result === "exit") {
+        playAgain = false;
+        break;
+      }
+    }
+
+    if (!playAgain) break;
+
     const answers = await inquirer.prompt([
       {
         type: "confirm",
