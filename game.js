@@ -4,7 +4,7 @@ class ShrugmanGame {
     this.secretPhrase = secretPhrase.toLowerCase();
     this.guesses = new Set();
     this.maxAttempts = 10;
-    this.shrugman = "¯_(:/)_/¯";
+    this.shrugman = "¯\\_(ツ)_/¯";
     this.attempts = 0;
     this.currentMaskedPhrase = this.maskPhrase();
   }
