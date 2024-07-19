@@ -18,6 +18,20 @@ const displayTitle = () => {
   );
 };
 
+const startGamePrompt = async () => {
+  clearConsole();
+  displayTitle();
+  const answers = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "start",
+      message: "Press Enter to start the game or Ctrl+C to exit.",
+      default: true,
+    },
+  ]);
+  return answers.start;
+};
+
 const selectCategory = async () => {
   const categoryNames = Object.keys(categories);
   const answers = await inquirer.prompt([
@@ -94,28 +108,28 @@ const playGame = async (category) => {
 
 const main = async () => {
   clearConsole();
-  displayTitle();
+  await startGamePrompt(); // Show start prompt
+
   let playAgain = true;
   while (playAgain) {
-    const category = await selectCategory();
-
-    if (category === "Exit") {
-      console.log(chalk.blue("Thank you for playing!"));
-      break;
-    }
-
     while (true) {
+      const category = await selectCategory();
+
+      if (category === "Exit") {
+        console.log(chalk.blue("Thank you for playing!"));
+        return; // Exit the program
+      }
+
       const result = await playGame(category);
+
       if (result === "back") {
-        break;
+        break; // Go back to category selection
       }
       if (result === "exit") {
-        playAgain = false;
-        break;
+        console.log(chalk.blue("Thank you for playing!"));
+        return; // Exit the program
       }
     }
-
-    if (!playAgain) break;
 
     const answers = await inquirer.prompt([
       {
