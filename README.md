@@ -26,7 +26,7 @@ To get started with Shrugman, clone the repository and follow the installation i
 
 ```markdown
 # Shrugman Game
- ¯\_(ツ)_/¯"
+ ¯\_(ツ)_/¯
 
 
 Shrugman is a command-line game where players guess letters to uncover a secret phrase. The game includes interactive prompts, colorful output, and an ASCII art title.
