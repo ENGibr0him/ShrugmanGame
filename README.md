@@ -22,9 +22,7 @@ To get started with Shrugman, clone the repository and follow the installation i
 
 ---
 
-### Example of README Section
 
-You can place the description section in your README file like this:
 
 ```markdown
 # Shrugman Game
@@ -60,20 +58,7 @@ To get started with Shrugman, clone the repository and follow the installation i
 ## Dependencies
 
 - [inquirer](https://www.npmjs.com/package/inquirer) - A collection of common interactive command line user interfaces.
-- [chalk](https://www.npmjs.com/package/chalk) - Terminal string styling done right.
-- [figlet](https://www.npmjs.com/package/figlet) - Create ASCII art from text.
-
-## Installation
-
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/shrugman-game.git
-    cd shrugman-game
-    ```
-
-2. Install the dependencies:
-    ```sh
-    npm install
+- [chalk](https://www.npmjs.com/package/chalk) - Terminal string styling done right
     ```
 
 ## Usage
