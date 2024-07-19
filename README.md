@@ -1,5 +1,4 @@
-Here's a detailed description for your repository that can be included in your README file or on your repository page:
-
+# Shrugman Game
 ---
 
 ### Description
