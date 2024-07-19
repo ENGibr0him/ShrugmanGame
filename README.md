@@ -27,25 +27,7 @@ To get started with Shrugman, clone the repository and follow the installation i
 ```markdown
 # Shrugman Game
 
-## Description
-
-Welcome to the Shrugman Game repository! Shrugman is a fun and interactive command-line game where players attempt to guess a hidden phrase one letter at a time. Inspired by the classic game of Hangman, Shrugman offers a modern twist with colorful outputs and an enhanced user interface.
-
-### Key Features:
-- **Interactive Gameplay**: Utilizes `inquirer` for smooth and user-friendly command-line interaction.
-- **Stylish Output**: Employs `chalk` to provide colorful and visually appealing game messages.
-- **ASCII Art Title**: Integrates `figlet` to display a stylized game title, enhancing the visual experience.
-- **Category Selection**: Players can choose from various categories of phrases to guess.
-- **Game History Tracking**: Keeps a record of game outcomes, allowing players to see their progress over time.
-
-### Technologies Used:
-- **Node.js**: The game is built with Node.js, leveraging its powerful capabilities for building command-line applications.
-- **Inquirer**: For interactive prompts that guide the player through category selection and letter guessing.
-- **Chalk**: To colorize and style terminal output, making the game more engaging.
-- **Figlet**: To render text as ASCII art, giving the game a unique and attractive title display.
-
-### Getting Started:
-To get started with Shrugman, clone the repository and follow the installation instructions provided below. Once set up, you can dive into the game and start guessing phrases in various categories. Enjoy the game, and challenge yourself to guess the phrases with the fewest incorrect attempts!
+Shrugman is a command-line game where players guess letters to uncover a secret phrase. The game includes interactive prompts, colorful output, and an ASCII art title.
 
 ## Features
 
@@ -58,7 +40,20 @@ To get started with Shrugman, clone the repository and follow the installation i
 ## Dependencies
 
 - [inquirer](https://www.npmjs.com/package/inquirer) - A collection of common interactive command line user interfaces.
-- [chalk](https://www.npmjs.com/package/chalk) - Terminal string styling done right
+- [chalk](https://www.npmjs.com/package/chalk) - Terminal string styling done right.
+- [figlet](https://www.npmjs.com/package/figlet) - Create ASCII art from text.
+
+## Installation
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/yourusername/shrugman-game.git
+    cd shrugman-game
+    ```
+
+2. Install the dependencies:
+    ```sh
+    npm install
     ```
 
 ## Usage
