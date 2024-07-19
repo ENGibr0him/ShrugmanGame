@@ -47,7 +47,7 @@ Shrugman is a command-line game where players guess letters to uncover a secret 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/shrugman-game.git
+    git clone https://github.com/ENGibr0him/ShrugmanGame
     cd shrugman-game
     ```
 
