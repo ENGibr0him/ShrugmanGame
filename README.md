@@ -1,5 +1,4 @@
 # Shrugman Game
----
 
 ### Description
 
