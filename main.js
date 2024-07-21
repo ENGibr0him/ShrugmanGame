@@ -1,4 +1,3 @@
-// main.js
 import inquirer from "inquirer";
 import chalk from "chalk";
 import figlet from "figlet";
@@ -72,10 +71,10 @@ const playGame = async (category) => {
     ]);
 
     if (guess.toLowerCase() === "back") {
-      return "back";
+      return { result: "back" };
     }
     if (guess.toLowerCase() === "exit") {
-      return "exit";
+      return { result: "exit" };
     }
 
     const result = game.makeGuess(guess);
@@ -101,15 +100,15 @@ const playGame = async (category) => {
     console.log(
       chalk.green(`Congratulations! You guessed the phrase: ${secretPhrase}`)
     );
+    return { result: "win", phrase: secretPhrase };
   } else {
     console.log(
       chalk.red(
         `Sorry! You ran out of attempts. The phrase was: ${secretPhrase}`
       )
     );
+    return { result: "loss", phrase: secretPhrase };
   }
-
-  return game.didWin() ? "win" : "loss";
 };
 
 const main = async () => {
@@ -117,37 +116,52 @@ const main = async () => {
   await startGamePrompt(); // Show start prompt
 
   let playAgain = true;
+  const gameHistory = []; // Array to keep track of game results
+
   while (playAgain) {
     while (true) {
       const category = await selectCategory();
 
       if (category === "Exit") {
         console.log(chalk.blue("Thank you for playing!"));
-        return; // Exit the program
+        break; // Exit the program
       }
 
-      const result = await playGame(category);
+      const { result, phrase } = await playGame(category);
 
       if (result === "back") {
         break; // Go back to category selection
       }
       if (result === "exit") {
         console.log(chalk.blue("Thank you for playing!"));
-        return; // Exit the program
+        playAgain = false;
+        break; // Exit the program
       }
+
+      gameHistory.push({ phrase, result }); // Record game result
     }
 
-    const { playAgain: playAgainResponse } = await inquirer.prompt([
-      {
-        type: "confirm",
-        name: "playAgain",
-        message: "Do you want to play another round?",
-      },
-    ]);
-    playAgain = playAgainResponse;
+    // Print game history
+    if (gameHistory.length > 0) {
+      console.log("\nGame history:");
+      gameHistory.forEach((game, index) => {
+        console.log(`${index + 1}. ${game.phrase} - ${game.result}`);
+      });
+    }
+
+    if (playAgain) {
+      const { playAgain: playAgainResponse } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "playAgain",
+          message: "Do you want to play another round?",
+        },
+      ]);
+      playAgain = playAgainResponse;
+    }
   }
 
-  console.log("Game history:");
+  console.log("Thank you for playing!");
 };
 
 main();
