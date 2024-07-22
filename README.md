@@ -122,7 +122,7 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the HashIbrahim License - see the [LICENSE](LICENSE) file for details.
 ```
 
 This README file provides a thorough overview of the project, its dependencies, installation and usage instructions, and details about the code structure and key features. It also invites contributions and specifies the licensing terms. Feel free to customize it further based on your specific needs and project details.
