@@ -62,23 +62,35 @@ const selectLanguage = () => {
 };
 
 const selectCategory = (language) => {
-  const categoryNames = Object.keys(categories);
+  const categoryNames = {
+    English: ["Movies", "Books", "Quotes", "Exit"],
+    Arabic: ["أفلام", "كتب", "اقتباسات", "خروج"],
+  };
   const message = language === "عربي" ? "اختر فئة:" : "Select a category:";
-  const exitOption = language === "عربي" ? "خروج" : "Exit";
   return inquirer
     .prompt([
       {
         type: "list",
         name: "category",
         message,
-        choices: [...categoryNames, exitOption],
+        choices: categoryNames[language === "عربي" ? "Arabic" : "English"],
       },
     ])
     .then((answers) => answers.category);
 };
 
 const playGame = (category, language) => {
-  const phrases = categories[category];
+  const categoriesMapping = {
+    Movies: "movies",
+    Books: "books",
+    Quotes: "quotes",
+    أفلام: "movies",
+    كتب: "books",
+    اقتباسات: "quotes",
+  };
+
+  const languageKey = language === "عربي" ? "Arabic" : "English";
+  const phrases = categories[categoriesMapping[category]][languageKey];
   const secretPhrase = phrases[Math.floor(Math.random() * phrases.length)];
   const game = new ShrugmanGame(secretPhrase);
 
@@ -120,21 +132,31 @@ const playGame = (category, language) => {
         },
       ])
       .then((answers) => {
-        const guess = answers.guess;
+        const guess = answers.guess.toLowerCase();
 
-        if (guess.toLowerCase() === "back" || guess === "عودة") {
+        if (guess === "back" || guess === "عودة") {
           return { result: "back" };
         }
-        if (guess.toLowerCase() === "exit" || guess === "خروج") {
+        if (guess === "exit" || guess === "خروج") {
           return { result: "exit" };
         }
 
         const result = game.makeGuess(guess);
 
         if (!result.success) {
-          console.log(chalk.red(result.message));
-        } else {
-          console.log(chalk.green(result.message));
+          const alreadyGuessedMessage =
+            language === "عربي"
+              ? "لقد خمّنت هذا الحرف من قبل. حاول مرة أخرى."
+              : "You already guessed that letter. Try again.";
+          console.log(chalk.red(alreadyGuessedMessage));
+        } else if (result.message === "Correct guess!") {
+          const correctGuessMessage =
+            language === "عربي" ? "تخمين صحيح!" : "Correct guess!";
+          console.log(chalk.green(correctGuessMessage));
+        } else if (result.message === "Wrong guess!") {
+          const wrongGuessMessage =
+            language === "عربي" ? "تخمين خاطئ!" : "Wrong guess!";
+          console.log(chalk.red(wrongGuessMessage));
         }
 
         const continueMessage =
